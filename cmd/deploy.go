@@ -188,10 +188,9 @@ var deployCmd = &cobra.Command{
 			return err
 		}
 
-		wg := &sync.WaitGroup{}
-		wg.Add(len(c.Nodes))
-
 		if !skipPostDeploy {
+			wg := &sync.WaitGroup{}
+			wg.Add(len(c.Nodes))
 			for _, node := range c.Nodes {
 				go func(node nodes.Node, wg *sync.WaitGroup) {
 					defer wg.Done()
@@ -261,7 +260,7 @@ func init() {
 	deployCmd.Flags().IPNetVarP(&mgmtIPv6Subnet, "ipv6-subnet", "6", net.IPNet{}, "management network IPv6 subnet range")
 	deployCmd.Flags().BoolVarP(&reconfigure, "reconfigure", "", false, "regenerate configuration artifacts and overwrite the previous ones if any")
 	deployCmd.Flags().UintVarP(&maxWorkers, "max-workers", "", 0, "limit the maximum number of workers creating nodes and virtual wires")
-	deployCmd.Flags().BoolVarP(&skipPostDeploy, "skipPostDeploy", "s", false, "skip post deploy action")
+	deployCmd.Flags().BoolVarP(&skipPostDeploy, "skip-post-deploy", "", false, "skip post deploy action")
 }
 
 func setFlags(conf *clab.Config) {
