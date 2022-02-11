@@ -191,7 +191,6 @@ var deployCmd = &cobra.Command{
 		if !skipPostDeploy {
 			wg := &sync.WaitGroup{}
 			wg.Add(len(c.Nodes))
-
 			for _, node := range c.Nodes {
 				go func(node nodes.Node, wg *sync.WaitGroup) {
 					defer wg.Done()
